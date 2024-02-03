@@ -35,6 +35,7 @@ const request = (method, path) => {
 
     let url = document.querySelector('body').getAttribute('data-url');
     let req = {
+        mode: 'cors',
         method: method.toUpperCase(),
         headers: {
             'Accept': 'application/json',
@@ -49,7 +50,13 @@ const request = (method, path) => {
     return {
         async then(...params) {
             return fetch(url + path, req)
-                .then((res) => res.json())
+                .then((res) => {
+                    console.log(res)
+                    if (!res.ok) {
+                        throw `Server error: [${res.status}] [${res.statusText}] [${res.url}]`;
+                    }
+                    return res.json();
+                })
                 .then((res) => {
                     if (res.error !== null) {
                         throw res.error[0];
