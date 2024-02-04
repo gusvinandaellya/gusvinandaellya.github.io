@@ -51,7 +51,6 @@ const request = (method, path) => {
         async then(...params) {
             return fetch(url + path, req)
                 .then((res) => {
-                    console.log(res)
                     if (!res.ok) {
                         throw `Server error: [${res.status}] [${res.statusText}] [${res.url}]`;
                     }
